@@ -2,7 +2,7 @@
 
 ## Modifications système observées
 
-une foisn`Env.exe` et `Res.exe` lancés,  les deux s'ajoutent aux
+une fois `Env.exe` et `Res.exe` lancés,  les deux s'ajoutent aux
 **Applications de démarrage** du Gestionnaire des tâches (persistance au
 redémarrage). Cependant, seul `Res.exe` s'exécute réellement : `Env.exe`
 crashe systématiquement avec l'erreur "could not find or load the Qt platform
