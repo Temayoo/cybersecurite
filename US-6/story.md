@@ -7,6 +7,16 @@ L’objectif est de récupérer la mémoire d’une machine virtuelle Windows 10
 Le dump utilisé est :
 
     C:\Users\ilian\memory-dump.elf
+---
+
+# Outils utilisés
+
+Les outils utilisés pour cette analyse sont :
+
+- VirtualBox : exécution de la machine virtuelle Windows 10 ;
+- VBoxManage : création du dump mémoire de la VM ;
+- PowerShell : exécution des commandes et filtrage des résultats ;
+- Volatility 3 : analyse forensique du dump mémoire.
 
 ---
 
@@ -182,6 +192,52 @@ La présence de WS2_32.dll signifie que le programme charge la bibliothèque ré
 ## Image
 
 ![DLL chargées par Res.exe](08-dlllist.png)
+
+---
+
+# Vérification des critères d’acceptation
+
+## Outils et commandes utilisés
+
+Les outils utilisés sont VirtualBox, VBoxManage, PowerShell et Volatility 3.
+
+Les principales commandes utilisées sont :
+
+    VBoxManage list runningvms
+    VBoxManage debugvm "Windows" dumpvmcore
+    Get-Item
+    windows.info
+    windows.pslist
+    windows.pstree
+    windows.cmdline
+    windows.netscan
+    windows.malware.malfind
+    windows.dlllist
+
+## Dump RAM complet et exploitable
+
+Le dump mémoire a été généré par VirtualBox et possède une taille de :
+
+    2 287 859 496 octets
+
+Volatility 3 parvient à lire le fichier et à récupérer les informations Windows ainsi que les structures mémoire nécessaires à l’analyse.
+
+## Processus actifs identifiés
+
+La commande windows.pslist permet d’identifier les processus actifs présents dans la mémoire.
+
+Res.exe a notamment été identifié avec :
+
+    PID 4504
+    PPID 2712
+
+## Connexions réseau suspectes relevées
+
+La commande windows.netscan permet d’examiner l’activité réseau visible dans la mémoire.
+
+Pour Res.exe, aucune connexion réseau n’est visible pour le PID 4504.
+
+La sortie globale de windows.netscan doit être conservée et examinée afin de relever toute autre connexion éventuellement suspecte.
 
 ---
 
